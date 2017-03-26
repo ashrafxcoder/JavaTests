@@ -2,8 +2,11 @@ package com.net;
 
 import com.sun.jndi.toolkit.url.Uri;
 
+import java.awt.*;
 import java.io.*;
 import java.net.*;
+import java.util.*;
+import java.util.List;
 
 /**
  * Created by Ashraf-XCODER on 3/21/2017.
@@ -43,7 +46,48 @@ public class Main {
         //showUrlContents(url);
 
 
-        downloadBBCSiteMainPage(url);
+        //downloadBBCSiteMainPage(url);
+
+
+        URLConnection urlConnection = url.openConnection();
+        //urlConnection.getContent();
+
+
+        urlConnection.connect();
+
+
+        Map<String, List<String>> fields = urlConnection.getHeaderFields();
+
+        for (int i = 0; i < fields.size(); i++) {
+
+
+            List<String> headerFields = fields.get(i);
+
+            for (String field : headerFields) {
+                System.out.println(field);
+            }
+        }
+
+
+        //urlConnection.addRequestProperty("Accept", "image/*");
+
+
+        //urlConnection.connect();
+        //url.openStream();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
