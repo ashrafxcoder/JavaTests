@@ -56,16 +56,16 @@ public class Main {
         urlConnection.connect();
 
 
-        Map<String, List<String>> fields = urlConnection.getHeaderFields();
+        //Headers collection
+        Map<String, List<String>> headers = urlConnection.getHeaderFields();
 
-        for (int i = 0; i < fields.size(); i++) {
-
-
-            List<String> headerFields = fields.get(i);
-
-            for (String field : headerFields) {
-                System.out.println(field);
+        for (String header : headers.keySet()) {
+            System.out.print(header + " -> ");
+            List<String> values = headers.get(header);
+            for (String value : values) {
+                System.out.print(value + " ");
             }
+            System.out.println();
         }
 
 
