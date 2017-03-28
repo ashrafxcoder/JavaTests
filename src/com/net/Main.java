@@ -56,51 +56,84 @@ public class Main {
         urlConnection.connect();
 
 
+        //setFileNameMap(urlConnection);
+
+
+
         //Headers collection
         Map<String, List<String>> headers = urlConnection.getHeaderFields();
 
-        for (String header : headers.keySet()) {
-            System.out.print(header + " -> ");
-            List<String> values = headers.get(header);
-            for (String value : values) {
-                System.out.print(value + " ");
+
+
+
+
+//        for (String header : headers.keySet()) {
+//            System.out.print(header + " -> ");
+//            List<String> values = headers.get(header);
+//            for (String value : values) {
+//                System.out.print(value + " ");
+//            }
+//            System.out.println();
+//        }
+
+
+
+
+        //       Last-Modified : Date
+        //       If-Modified-Since : Date
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+    private static void setFileNameMap(URLConnection urlConnection) {
+        FileNameMap fileNameMap = urlConnection.getFileNameMap();
+        System.out.println(fileNameMap.getContentTypeFor("html"));
+
+
+        FileNameMap defaultNamingMap = new FileNameMap() {
+            @Override
+            public String getContentTypeFor(String fileName) {
+                switch (fileName){
+                    case "mp3":
+                        return "audio/mp3";
+                    case "jpe":
+                        return "image/jpg";
+                    case "html":
+                        return "text/html";
+                    case "json":
+                        return "application/json";
+                    case "xml":
+                        return "application/xml";
+                    case "pdf":
+                        return "application/pdf";
+                        default: return null;
+                }
             }
-            System.out.println();
-        }
+        };
 
+        URLConnection.setFileNameMap(defaultNamingMap);
 
-        //urlConnection.addRequestProperty("Accept", "image/*");
-
-
-        //urlConnection.connect();
-        //url.openStream();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        FileNameMap customFileNameMap = urlConnection.getFileNameMap();
+        System.out.println(customFileNameMap.getContentTypeFor("pdf"));
     }
 
     private static void downloadBBCSiteMainPage(URL url) throws IOException {
