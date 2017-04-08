@@ -13,93 +13,57 @@ import java.util.List;
  */
 public class Main {
 
-    public static void main(String[] args) throws IOException, URISyntaxException {
+    public static void main(String[] args) throws IOException, URISyntaxException, InterruptedException {
 
-        //URI uri = new URI("http://www.google.com");
+        Authenticator.setDefault(new ConsoleAuthenticator());
 
+        URL postUrl = new URL("http://localhost:2727/api/data");
+        HttpURLConnection httpURLConnection = (HttpURLConnection) postUrl.openConnection();
+        httpURLConnection.setRequestMethod("POST");
 
-        //Reletivise
-        //Resolve
+        httpURLConnection.setDoOutput(true);
+        OutputStream raw = httpURLConnection.getOutputStream();
+        OutputStream buffered = new BufferedOutputStream(raw);
+        OutputStreamWriter out = new OutputStreamWriter(buffered, "8859_1");
 
+        out.write("name=ShafiqLovesPHP&age=15\r\n");
+        out.flush();
+        out.close();
 
-        //http://docs.oracle.com/javase/1.3/docs/guide/index.html
-        ///index.html
-        //guide/index.html
+        BufferedReader reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
 
-
-        ///urdu/regional-39396741
-        //www.bbc.com/urdu
-        //URI uri = new URI("http://docs.oracle.com/javase/1.3/docs/guide/index.html");
-
-        URI uri = new URI("http://www.bbc.com/urdu");
-
-
-        //URI uri2 = new URI("/urdu/regional-39396741");
-
-        //System.out.println(uri1.relativize(uri));
-
-        //System.out.println(uri1.resolve(uri2));
-
-
-        URL url = uri.toURL();
-
-        //showUrlContents(url);
-
-
-        //downloadBBCSiteMainPage(url);
-
-
-        URLConnection urlConnection = url.openConnection();
-        //urlConnection.getContent();
-
-
-        urlConnection.connect();
-
-
-        //setFileNameMap(urlConnection);
-
-
-
-        //Headers collection
-        Map<String, List<String>> headers = urlConnection.getHeaderFields();
+        while (true){
+            String line = reader.readLine();
+            if (line != null){
+                System.out.println(line);
+            }else break;
+        }
 
 
 
 
-
-//        for (String header : headers.keySet()) {
-//            System.out.print(header + " -> ");
-//            List<String> values = headers.get(header);
-//            for (String value : values) {
-//                System.out.print(value + " ");
-//            }
-//            System.out.println();
-//        }
+        Thread.sleep(100 * 1000);
 
 
+     //setDoOutput Test
 
+        URL newUrl = new URL("http://localhost:2727/api/identity");
 
-        //       Last-Modified : Date
-        //       If-Modified-Since : Date
+        URLConnection urlConnection1 = newUrl.openConnection();
 
+        urlConnection1.setAllowUserInteraction(true);
 
+        urlConnection1.connect();
 
+        InputStream inputStream = urlConnection1.getInputStream();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        while (true){
+            String line = bufferedReader.readLine();
+            if (line != null){
+                System.out.println(line);
+            }else break;
+        }
 
 
     }
