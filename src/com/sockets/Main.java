@@ -15,13 +15,14 @@ import java.util.StringTokenizer;
 public class Main {
     public static void main(String[] args) throws Exception {
 
+        int upperLimit = 1;
 
-       PortScanner scanner = new PortScanner();
-       scanner.showAllOpenPorts();
-
-
-
-        
+        for (int i = 1; i <= 10; i++) {
+            MultithreadedPortScanner scanner = new MultithreadedPortScanner(upperLimit, i*100);
+            Thread thread = new Thread(scanner);
+            thread.start();
+            upperLimit = i * 100;
+        }
 
     }
 
