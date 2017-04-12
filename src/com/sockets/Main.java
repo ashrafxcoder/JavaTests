@@ -15,19 +15,27 @@ import java.util.StringTokenizer;
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        int upperLimit = 1;
 
-        for (int i = 1; i <= 10; i++) {
-            MultithreadedPortScanner scanner = new MultithreadedPortScanner(upperLimit, i*100);
-            Thread thread = new Thread(scanner);
-            thread.start();
-            upperLimit = i * 100;
-        }
+
+        portScanningDriver(12, true);
+        
+
 
     }
 
 
+    public static void portScanningDriver(int totalThreads, boolean isMultithreaded) {
 
+        if (isMultithreaded) {
+            int upperLimit = 1;
+            for (int i = 1; i <= totalThreads; i++) {
+                MultithreadedPortScanner scanner = new MultithreadedPortScanner(upperLimit, i * 100);
+                Thread thread = new Thread(scanner);
+                thread.start();
+                upperLimit = i * 200;
+            }
+        }
+    }
 
 
 
